@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Atelier (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Atelier (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
