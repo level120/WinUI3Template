@@ -61,7 +61,7 @@ public partial class App
             // Create a Frame to act as the navigation context and navigate to the first page
             _window.Content = new Frame();
         }
-        
+
         if (_window.Content is Frame rootFrame)
         {
             rootFrame.NavigationFailed -= OnNavigationFailed;
@@ -74,7 +74,7 @@ public partial class App
 
     private static void OnBindingFailed(object sender, BindingFailedEventArgs e)
     {
-        // Ignore the exception from NonExistentProperty in BindingPage.xaml, 
+        // Ignore the exception from NonExistentProperty in BindingPage.xaml,
         // as the sample code intentionally includes a binding failure.
         if (e.Message.Contains("NonExistentProperty"))
         {

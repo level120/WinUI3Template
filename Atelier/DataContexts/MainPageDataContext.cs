@@ -9,9 +9,14 @@ namespace Atelier.DataContexts;
 /// </summary>
 public partial class MainPageDataContext : ObservableObject
 {
+    private bool _loadingState;
+
     /// <summary>
     /// Loading state of the page
     /// </summary>
-    [ObservableProperty]
-    private bool _loadingState;
+    public bool LoadingState
+    {
+        get => _loadingState;
+        set => SetProperty(ref _loadingState, value);
+    }
 }
