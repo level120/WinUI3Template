@@ -3,6 +3,7 @@
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Windows.AppNotifications;
 
 namespace Atelier.Extensions;
 
@@ -17,13 +18,17 @@ internal static class AtelierConfigureExtensions
     /// <param name="ioc">ioc</param>
     public static void ConfigureServices(this Ioc ioc)
     {
+        // Register the ViewModels and other services here.
         var serviceCollection = new ServiceCollection();
 
-        // Register the ViewModels and other services here.
-        // Cannot reflection because if the way the project is AOT.
+        // ViewModels
         serviceCollection.AddTransient<ShellViewModel>();
+        serviceCollection.AddTransient<HomeViewModel>();
+        serviceCollection.AddTransient<SettingsViewModel>();
 
-        var serviceProvider = serviceCollection.BuildServiceProvider();
-        ioc.ConfigureServices(serviceProvider);
+        // Services
+        serviceCollection.AddSingleton(AppNotificationManager.Default);
+
+        ioc.ConfigureServices(serviceCollection.BuildServiceProvider());
     }
 }

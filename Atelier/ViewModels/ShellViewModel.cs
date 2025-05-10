@@ -8,7 +8,7 @@ namespace Atelier.ViewModels;
 /// <summary>
 /// <see cref="Shell"/> DataContext
 /// </summary>
-public partial class ShellViewModel : ViewModelBase
+public sealed partial class ShellViewModel : ViewModelBase
 {
     /// <summary>
     /// Loading State

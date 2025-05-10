@@ -7,7 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:bases="using:Atelier.Views.Bases"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="OnLoaded">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -27,25 +28,55 @@
         <NavigationView x:Name="NavigationView"
                         Grid.Row="1"
                         IsPaneToggleButtonVisible="False"
-                        IsBackButtonVisible="Collapsed">
+                        IsBackButtonVisible="Collapsed"
+                        ItemInvoked="OnNavItemInvoked">
             <NavigationView.MenuItems>
-                <NavigationViewItem Content="Home" Icon="Home" ToolTipService.ToolTip="Home" Tag="SamplePage1"/>
+                <NavigationViewItem Content="Home"
+                                    Icon="Home"
+                                    Tag="DefaultHome"
+                                    ToolTipService.ToolTip="Home" />
+
                 <NavigationViewItemSeparator />
-                <NavigationViewItem Content="Account" Icon="Contact" ToolTipService.ToolTip="Account" Tag="SamplePage2">
+
+                <NavigationViewItem Content="Developer Tools"
+                                    Tag="DeveloperToolsGroup"
+                                    IsExpanded="True"
+                                    ToolTipService.ToolTip="Developer Tools">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xEC7A;" />
+                    </NavigationViewItem.Icon>
+
                     <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Content="Mail" Icon="Mail" ToolTipService.ToolTip="Mail" Tag="SamplePage3"/>
-                        <NavigationViewItem Content="Calendar" Icon="Calendar" ToolTipService.ToolTip="Calendar" Tag="SamplePage4"/>
-                    </NavigationViewItem.MenuItems>
-                </NavigationViewItem>
-                <NavigationViewItem Content="Document options" Icon="Page2" ToolTipService.ToolTip="Document options" SelectsOnInvoked="False">
-                    <NavigationViewItem.MenuItems>
-                        <NavigationViewItem Content="Create new" Icon="NewFolder" ToolTipService.ToolTip="Create new" Tag="SamplePage5"/>
-                        <NavigationViewItem Content="Upload file" Icon="OpenLocal" ToolTipService.ToolTip="Upload file" Tag="SamplePage6"/>
+                        <NavigationViewItem Content="API Tool"
+                                            Tag="ApiTool"
+                                            ToolTipService.ToolTip="API Too">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xF6FA;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+
+                        <NavigationViewItem Content="Decrypt Log"
+                                            Tag="DecryptLog"
+                                            ToolTipService.ToolTip="Decrypt Log">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE8E5;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+
+                        <NavigationViewItem Content="Server Checker"
+                                            Tag="ServerChecker"
+                                            ToolTipService.ToolTip="Server Checker">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE950;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
             </NavigationView.MenuItems>
 
-            <Frame x:Name="ContentFrame"/>
+            <Frame x:Name="ContentFrame"
+                   IsNavigationStackEnabled="False"
+                   Padding="25"/>
         </NavigationView>
     </Grid>
 </bases:ShellBase>
