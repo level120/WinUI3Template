@@ -45,7 +45,7 @@ if (Get-Command -Name "dotnet" -errorAction SilentlyContinue) {
 [string] $Platform = "x64"
 [string] $Runtime = "win-$Platform"
 [string] $Profile = $Runtime
-[string] $PublishDir = "$RootPath/Atelier/bin/$Profile/publish"
+[string] $PublishDir = "$RootPath/src/Atelier/bin/$Profile/publish"
 
 
 # Clean-up
