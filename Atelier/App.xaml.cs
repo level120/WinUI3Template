@@ -1,6 +1,9 @@
 ﻿using System.Diagnostics;
 
-using Atelier.Pages;
+using Atelier.Extensions;
+using Atelier.Views;
+
+using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -19,7 +22,7 @@ namespace Atelier;
 /// </summary>
 public partial class App
 {
-    private Window? _window;
+    private static Window? s_window;
 
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
@@ -39,14 +42,17 @@ public partial class App
     /// <param name="args">Details about the launch request and process.</param>
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        _window = new Window
+        Ioc.Default.ConfigureServices();
+        AppNotificationManager.Default.Register();
+
+        s_window = new Window
         {
             SystemBackdrop = new MicaBackdrop(),
             Title = "Atelier",
         };
-        _window.AppWindow.SetIcon("Assets/app.ico");
-        _window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        _window.AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
+        s_window.AppWindow.SetIcon("Assets/app.ico");
+        s_window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+        s_window.AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
 
 #if DEBUG
         if (Debugger.IsAttached)
@@ -56,20 +62,20 @@ public partial class App
 #endif
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
-        if (_window.Content is not Frame)
+        if (s_window.Content is not Frame)
         {
             // Create a Frame to act as the navigation context and navigate to the first page
-            _window.Content = new Frame();
+            s_window.Content = new Frame();
         }
 
-        if (_window.Content is Frame rootFrame)
+        if (s_window.Content is Frame rootFrame)
         {
             rootFrame.NavigationFailed -= OnNavigationFailed;
             rootFrame.NavigationFailed += OnNavigationFailed;
-            rootFrame.Navigate(typeof(MainShellPage), args.Arguments);
+            rootFrame.Navigate(typeof(Shell), args.Arguments);
         }
 
-        _window.Activate();
+        s_window.Activate();
     }
 
     private static void OnBindingFailed(object sender, BindingFailedEventArgs e)
