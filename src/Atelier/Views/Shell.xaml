@@ -72,9 +72,36 @@
                         </NavigationViewItem>
                     </NavigationViewItem.MenuItems>
                 </NavigationViewItem>
+
+                <NavigationViewItem Content="QA Tools"
+                                    Tag="QAToolsGroup"
+                                    IsExpanded="True"
+                                    ToolTipService.ToolTip="QA Tools">
+                    <NavigationViewItem.Icon>
+                        <FontIcon Glyph="&#xE939;" />
+                    </NavigationViewItem.Icon>
+
+                    <NavigationViewItem.MenuItems>
+                        <NavigationViewItem Content="Clear Icon Cache"
+                                            Tag="ClearIconCache"
+                                            ToolTipService.ToolTip="Clear Icon Cache">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xEC4E;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+
+                        <NavigationViewItem Content="Push Message"
+                                            Tag="PushMessage"
+                                            ToolTipService.ToolTip="Push Message">
+                            <NavigationViewItem.Icon>
+                                <FontIcon Glyph="&#xE90A;" />
+                            </NavigationViewItem.Icon>
+                        </NavigationViewItem>
+                    </NavigationViewItem.MenuItems>
+                </NavigationViewItem>
             </NavigationView.MenuItems>
 
-            <Frame x:Name="ContentFrame"
+            <Frame x:Name="RootFrame"
                    IsNavigationStackEnabled="False"
                    Padding="25"/>
         </NavigationView>

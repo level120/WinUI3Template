@@ -53,9 +53,9 @@ public sealed partial class Shell
 
     private void NavigatePage(Type type)
     {
-        if (ContentFrame.Content?.GetType() != type)
+        if (RootFrame.Content?.GetType() != type)
         {
-            ContentFrame.Navigate(type, null, _slideTransition);
+            RootFrame.Navigate(type, null, _slideTransition);
         }
     }
 }

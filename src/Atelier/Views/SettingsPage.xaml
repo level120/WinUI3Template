@@ -7,9 +7,128 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:bases="using:Atelier.Views.Bases"
-    mc:Ignorable="d">
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    mc:Ignorable="d"
+    Loaded="OnSettingsPageLoaded">
+    <Page.Resources>
+        <!--  These styles can be referenced to create a consistent SettingsPage layout  -->
+        <!--  Reference SettingsExpander Page in Windows Community Toolkit Gallery for the full sample  -->
+
+        <!--  Spacing between cards  -->
+        <x:Double x:Key="SettingsCardSpacing">4</x:Double>
+
+        <!--  Style (inc. the correct spacing) of a section header  -->
+        <Style
+            x:Key="SettingsSectionHeaderTextBlockStyle"
+            BasedOn="{StaticResource BodyStrongTextBlockStyle}"
+            TargetType="TextBlock">
+            <Style.Setters>
+                <Setter Property="Margin" Value="1,30,0,6" />
+            </Style.Setters>
+        </Style>
+    </Page.Resources>
 
     <Grid>
-        <TextBlock>This is settings page.</TextBlock>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="HeaderText"
+                   MaxWidth="1064"
+                   Margin="36,24,36,0"
+                   Style="{StaticResource TitleTextBlockStyle}"
+                   Text="Settings" />
+        <ScrollViewer x:Name="Scroller"
+                      Grid.Row="1"
+                      Padding="36,0,36,0">
+            <Border>
+                <StackPanel MaxWidth="1064"
+                            Spacing="{StaticResource SettingsCardSpacing}">
+                    <InfoBar IsOpen="True"
+                             IsClosable="False"
+                             Margin="0,10"
+                             Severity="Warning"
+                             Title="Some features unavailable."
+                             Message="Some features have been disabled due to a bug in the Windows App SDK."/>
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
+                               Text="Appearance &amp; behavior" />
+                    <controls:SettingsCard Description="Select which app theme to display"
+                                           Header="App theme">
+                        <controls:SettingsCard.HeaderIcon>
+                            <FontIcon Glyph="&#xE790;" />
+                        </controls:SettingsCard.HeaderIcon>
+                        <ComboBox x:Name="ThemeMode"
+                                  AutomationProperties.AutomationId="themeModeComboBox"
+                                  SelectionChanged="OnThemeModeChanged"
+                                  IsEnabled="False">
+                            <ComboBoxItem Content="Light" Tag="Light" />
+                            <ComboBoxItem Content="Dark" Tag="Dark" />
+                            <ComboBoxItem Content="Use system setting" Tag="Default" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <!--  About  -->
+                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="About" />
+                    <controls:SettingsExpander
+                        Margin="0,0,0,24"
+                        Description="© 2025 Microsoft. All rights reserved."
+                        Header="{StaticResource AppTitleName}"
+                        IsExpanded="True">
+                        <controls:SettingsExpander.HeaderIcon>
+                            <BitmapIcon ShowAsMonochrome="False" UriSource="/Assets/app.ico" />
+                        </controls:SettingsExpander.HeaderIcon>
+                        <TextBlock
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            IsTextSelectionEnabled="True"
+                            Text="{x:Bind Version}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard
+                                x:Name="ToCloneRepoCard"
+                                Click="OnCloneRepoCardClick"
+                                Header="To clone this repository"
+                                IsClickEnabled="True">
+                                <TextBlock
+                                    x:Name="GitCloneTextBlock"
+                                    FontFamily="Consolas"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    IsTextSelectionEnabled="True"
+                                    Text="git clone https://github.com/microsoft/WinUI-Gallery" />
+                                <controls:SettingsCard.ActionIcon>
+                                    <FontIcon Glyph="&#xE8C8;" />
+                                </controls:SettingsCard.ActionIcon>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard
+                                x:Name="BugRequestCard"
+                                Header="File a bug or request new sample"
+                                IsClickEnabled="True">
+                                <controls:SettingsCard.ActionIcon>
+                                    <FontIcon Glyph="&#xE8A7;" />
+                                </controls:SettingsCard.ActionIcon>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard
+                                HorizontalContentAlignment="Left"
+                                ContentAlignment="Vertical"
+                                Header="Dependencies &amp; references">
+                                <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                    <HyperlinkButton Content="WinUI 3" NavigateUri="https://aka.ms/winui" />
+                                    <HyperlinkButton Content="Windows Community Toolkit" NavigateUri="https://aka.ms/toolkit/windows" />
+                                    <HyperlinkButton Content="ColorCode-Universal" NavigateUri="https://github.com/WilliamABradley/ColorCode-Universal" />
+                                    <HyperlinkButton Content="Win2D" NavigateUri="https://github.com/Microsoft/Win2D" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard
+                                HorizontalContentAlignment="Left"
+                                ContentAlignment="Vertical"
+                                Header="THIS CODE AND INFORMATION IS PROVIDED ‘AS IS’ WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE IMPLIED WARRANTIES OF MERCHANTABILITY AND/OR FITNESS FOR A PARTICULAR PURPOSE.">
+                                <StackPanel Margin="-12,0,0,0" Orientation="Vertical">
+                                    <HyperlinkButton Content="Microsoft Services Agreement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=822631" />
+                                    <HyperlinkButton Content="Microsoft Privacy Statement" NavigateUri="https://go.microsoft.com/fwlink/?LinkId=521839" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
     </Grid>
 </bases:SettingsPageBase>

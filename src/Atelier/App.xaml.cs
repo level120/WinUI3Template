@@ -1,13 +1,13 @@
 ﻿using System.Diagnostics;
 
 using Atelier.Extensions;
+using Atelier.Helpers;
 using Atelier.Views;
 
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
@@ -37,6 +37,20 @@ public partial class App
     }
 
     /// <summary>
+    /// Gets the frame of the StartupWindow.
+    /// </summary>
+    /// <returns>The frame of the StartupWindow.</returns>
+    public static Frame? GetRootFrame()
+    {
+        if (s_window?.Content is Shell rootPage)
+        {
+            return rootPage.FindName("RootFrame") as Frame;
+        }
+
+        return null;
+    }
+
+    /// <summary>
     /// Invoked when the application is launched.
     /// </summary>
     /// <param name="args">Details about the launch request and process.</param>
@@ -45,11 +59,8 @@ public partial class App
         Ioc.Default.ConfigureServices();
         AppNotificationManager.Default.Register();
 
-        s_window = new Window
-        {
-            SystemBackdrop = new MicaBackdrop(),
-            Title = "Atelier",
-        };
+        s_window = WindowHelper.CreateWindow();
+        s_window.Title = "Atelier";
         s_window.AppWindow.SetIcon("Assets/app.ico");
         s_window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
         s_window.AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
