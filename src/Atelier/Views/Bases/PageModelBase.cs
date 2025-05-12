@@ -55,7 +55,7 @@ public abstract class PageModelBase<TViewModel> : Page
         }
         else
         {
-            await DispatcherQueue.EnqueueAsync(action.Invoke).ConfigureAwait(false);
+            await DispatcherQueue.EnqueueAsync(action).ConfigureAwait(false);
         }
     }
 }

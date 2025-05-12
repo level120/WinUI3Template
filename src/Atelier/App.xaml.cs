@@ -22,8 +22,6 @@ namespace Atelier;
 /// </summary>
 public partial class App
 {
-    private static Window? s_window;
-
     /// <summary>
     /// Initializes the singleton application object.  This is the first line of authored code
     /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -37,12 +35,17 @@ public partial class App
     }
 
     /// <summary>
+    /// Application's main window.
+    /// </summary>
+    public static Window? MainWindow { get; private set; }
+
+    /// <summary>
     /// Gets the frame of the StartupWindow.
     /// </summary>
     /// <returns>The frame of the StartupWindow.</returns>
     public static Frame? GetRootFrame()
     {
-        if (s_window?.Content is Shell rootPage)
+        if (MainWindow?.Content is Shell rootPage)
         {
             return rootPage.FindName("RootFrame") as Frame;
         }
@@ -59,11 +62,11 @@ public partial class App
         Ioc.Default.ConfigureServices();
         AppNotificationManager.Default.Register();
 
-        s_window = WindowHelper.CreateWindow();
-        s_window.Title = "Atelier";
-        s_window.AppWindow.SetIcon("Assets/app.ico");
-        s_window.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
-        s_window.AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
+        MainWindow = WindowHelper.CreateWindow();
+        MainWindow.Title = "Atelier";
+        MainWindow.AppWindow.SetIcon("Assets/app.ico");
+        MainWindow.AppWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+        MainWindow.AppWindow.TitleBar.ButtonBackgroundColor = Microsoft.UI.Colors.Transparent;
 
 #if DEBUG
         if (Debugger.IsAttached)
@@ -73,20 +76,20 @@ public partial class App
 #endif
         // Do not repeat app initialization when the Window already has content,
         // just ensure that the window is active
-        if (s_window.Content is not Frame)
+        if (MainWindow.Content is not Frame)
         {
             // Create a Frame to act as the navigation context and navigate to the first page
-            s_window.Content = new Frame();
+            MainWindow.Content = new Frame();
         }
 
-        if (s_window.Content is Frame rootFrame)
+        if (MainWindow.Content is Frame rootFrame)
         {
             rootFrame.NavigationFailed -= OnNavigationFailed;
             rootFrame.NavigationFailed += OnNavigationFailed;
             rootFrame.Navigate(typeof(Shell), args.Arguments);
         }
 
-        s_window.Activate();
+        MainWindow.Activate();
     }
 
     private static void OnBindingFailed(object sender, BindingFailedEventArgs e)

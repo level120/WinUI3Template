@@ -40,6 +40,7 @@ public sealed partial class Shell
             var pageType = pageName switch
             {
                 "DefaultHome" => typeof(HomePage),
+                "DecryptLog" => typeof(DecryptLogPage),
                 _ => typeof(HomePage),
             };
 

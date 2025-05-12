@@ -13,7 +13,10 @@ public abstract class ViewModelBase : ObservableObject
     /// <summary>
     /// Current DispatcherQueue.
     /// </summary>
-    protected static DispatcherQueue CurrentDispatcherQueue => DispatcherQueue.GetForCurrentThread();
+    protected static DispatcherQueue CurrentDispatcherQueue =>
+        DispatcherQueue.GetForCurrentThread()
+            ?? App.MainWindow?.DispatcherQueue
+            ?? throw new InvalidOperationException("Could not found dispatcher.");
 
     /// <summary>
     /// Invoke the action on the UI thread.

@@ -1,6 +1,8 @@
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using System.Reflection;
+
 using Microsoft.UI.Xaml;
 
 using Windows.ApplicationModel.DataTransfer;
@@ -22,28 +24,22 @@ public sealed partial class SettingsPage
     public SettingsPage()
     {
         InitializeComponent();
-
-        Version = "1.0.0.0";
     }
 
-    public string Version { get; }
+    /// <summary>
+    /// Application version.
+    /// </summary>
+    public string Version { get; } = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "Unknown";
 
     private void OnSettingsPageLoaded(object sender, RoutedEventArgs e)
     {
-        switch (ThemeHelper.RootTheme)
+        ThemeMode.SelectedIndex = ThemeHelper.RootTheme switch
         {
-            case ElementTheme.Light:
-                ThemeMode.SelectedIndex = 0;
-                break;
-
-            case ElementTheme.Dark:
-                ThemeMode.SelectedIndex = 1;
-                break;
-
-            case ElementTheme.Default:
-                ThemeMode.SelectedIndex = 2;
-                break;
-        }
+            ElementTheme.Light => 0,
+            ElementTheme.Dark => 1,
+            ElementTheme.Default => 2,
+            _ => ThemeMode.SelectedIndex
+        };
     }
 
     private void OnCloneRepoCardClick(object sender, RoutedEventArgs e)
@@ -66,16 +62,9 @@ public sealed partial class SettingsPage
             {
                 ThemeHelper.RootTheme = theme;
 
-                switch (selectedTheme)
-                {
-                    case "Dark":
-                        TitleBarHelper.SetCaptionButtonColors(window, Colors.White);
-                        break;
-
-                    case "Light":
-                        TitleBarHelper.SetCaptionButtonColors(window, Colors.Black);
-                        break;
-                }
+                TitleBarHelper.SetCaptionButtonColors(
+                    window,
+                    ThemeHelper.IsDarkTheme() ? Colors.White : Colors.Black);
             }
         }
     }

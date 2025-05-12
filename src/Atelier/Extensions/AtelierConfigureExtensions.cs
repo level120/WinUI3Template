@@ -22,9 +22,10 @@ internal static class AtelierConfigureExtensions
         var serviceCollection = new ServiceCollection();
 
         // ViewModels
-        serviceCollection.AddTransient<ShellViewModel>();
-        serviceCollection.AddTransient<HomeViewModel>();
-        serviceCollection.AddTransient<SettingsViewModel>();
+        serviceCollection.AddSingleton<ShellViewModel>();
+        serviceCollection.AddSingleton<HomeViewModel>();
+        serviceCollection.AddSingleton<SettingsViewModel>();
+        serviceCollection.AddSingleton<DecryptLogViewModel>();
 
         // Services
         serviceCollection.AddSingleton(AppNotificationManager.Default);
